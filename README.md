@@ -10,57 +10,14 @@ We introduce Goedel-Prover-V2, an open-source language model series that achieve
 ### State-of-the-art performance on multiple benchmarks under Pass@32.
 
 
-<style>
-  .fig-row {
-    display: flex;
-    justify-content: space-between; /* spread them out */
-    align-items: flex-start;        /* align tops */
-    gap: 1rem;                      /* space between images */
-  }
-  .fig-row img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .fig-row .panel {
-    /* override per‐panel width as needed */
-    /* e.g. .panel-1 { width:25%; } .panel-2 { width:40%; } etc. */
-  }
-  figure {
-    margin: 0;
-  }
-  figure figcaption {
-    text-align: center;
-    font-size: 0.9em;
-    margin-top: 0.75rem;
-    color: #555;
-  }
- figure figcaption strong {
-    font-weight: bold;
-  }
-  /* Italicize the rest of the caption */
-  figure figcaption em {
-    font-style: italic;
-  }
-</style>
+| ![MiniF2F](assets/minif2f_bar_plot_rgb.png) | ![PutnamBench](assets/putnam_bar_plot_modified.png) | ![FoMOBench](assets/fomobench_bar_plot_modified.png) |
+|:--:|:--:|:--:|
 
-<figure>
-  <div class="fig-row">
-    <div class="panel panel-1" style="width:35%;">
-      <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/minif2f_bar_plot_rgb.png?raw=true" alt="…">
-    </div>
-    <div class="panel panel-2" style="width:38.0%;">
-      <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/putnam_bar_plot_modified.png?raw=true" alt="…">
-    </div>
-    <div class="panel panel-3" style="width:25.5%;">
-      <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/fomobench_bar_plot_modified.png?raw=true" alt="…">
-    </div>
-  </div>
-  <figcaption>
-      <strong>Figure 1</strong>: <em>Pass@32 performance of Goedel-Prover-V2 and other baselines on MiniF2F, PutnamBench, and our curated FoMOBench. <strong>(Left)</strong> Our small model, Geodel-Prover-V2-8B, achieves 83.0% on MiniF2F test set under Pass@32, outperforming DeepSeek-Prover-V2-671B under same sample budget. Our flagship model Goedel-Prover-V2-32B achieves 88.0%, outperforming both previous SOTA DeepSeek-Prover-V2-671B and the concurrent work Kimina-Prover-72B under Pass@32. Additional 2 rounds of compiler-guided self-correction push the score to 90.4%. <strong>(Middle)</strong> On PutnamBench, our small model (8B) and flagship model (32B) solves 15 and 43 problems under 32 sample budget, significantly outperforming 23 problems solved by DeepSeek-Prover-V2-671B under the same sample budget. 2 rounds of self-correction push the score to xxx.  <strong>(Right)</strong> On our newly curated Olympiad benchmark <strong>FoMOBench</strong> (<strong>Fo</strong>rmal <strong>M</strong>ath <strong>O</strong>lympiad), which consists of 360 math olympiad problems from IMO, IMO shortlist, and regional mathematical Olympiad problems, Goedel-Prover-V2-32B successfully solved 60 problems out of 360 (Pass@32), surpassing DeepSeek-Prover-V2-671B which solves 50 under the same sample budget.</em>
-  </figcaption>
-</figure>
 
+*<p align="center"> <b>Figure 1</b>: Pass@32 performance of Goedel-Prover-V2 and other baselines on MiniF2F, PutnamBench, and our curated FoMOBench.  
+<b>(Left)</b> Our small model, Geodel-Prover-V2-8B, achieves 83.0% on MiniF2F test set under Pass@32, outperforming DeepSeek-Prover-V2-671B under same sample budget. Our flagship model Goedel-Prover-V2-32B achieves 88.0%, outperforming both previous SOTA DeepSeek-Prover-V2-671B and the concurrent work Kimina-Prover-72B under Pass@32. Additional 2 rounds of compiler-guided self-correction push the score to 90.4%.  
+<b>(Middle)</b> On PutnamBench, our small model (8B) and flagship model (32B) solves 15 and 43 problems under 32 sample budget, significantly outperforming 23 problems solved by DeepSeek-Prover-V2-671B under the same sample budget. 2 rounds of self-correction push the score to xxx.  
+<b>(Right)</b> On our newly curated Olympiad benchmark <b>FoMOBench</b> (<b>Fo</b>rmal <b>M</b>ath <b>O</b>lympiad), which consists of 360 math olympiad problems from IMO, IMO shortlist, and regional mathematical Olympiad problems, Goedel-Prover-V2-32B successfully solved 60 problems out of 360 (Pass@32), surpassing DeepSeek-Prover-V2-671B which solves 50 under the same sample budget.</p>*
 
 ### Rank 1 on PutnamBench Leaderboard
 
@@ -87,53 +44,15 @@ We introduce Goedel-Prover-V2, an open-source language model series that achieve
 
 ### Compelling scaling performance under different budgets.
 
-<style>
-  .fig-row {
-    display: flex;
-    justify-content: space-between; /* spread them out */
-    align-items: flex-start;        /* align tops */
-    gap: 1rem;                      /* space between images */
-  }
-  .fig-row img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .fig-row .panel {
-    /* override per‐panel width as needed */
-    /* e.g. .panel-1 { width:25%; } .panel-2 { width:40%; } etc. */
-  }
-  figure {
-    margin: 0;
-  }
-  figure figcaption {
-    text-align: center;
-    font-size: 0.9em;
-    margin-top: 0.75rem;
-    color: #555;
-  }
- figure figcaption strong {
-    font-weight: bold;
-  }
-  /* Italicize the rest of the caption */
-  figure figcaption em {
-    font-style: italic;
-  }
-</style>
 
-<figure>
-  <div class="fig-row">
-    <div class="panel panel-1" style="width:50%;">
-      <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/inference_scale_performance.png?raw=true" alt="…">
-    </div>
-    <div class="panel panel-2" style="width:50.0%;">
-      <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/inference_scale_performance_compute_adjusted.png?raw=true" alt="…">
-    </div>
-  </div>
-  <figcaption>
-      <strong>Figure 3</strong>: <em>Performance on MiniF2F test set under different sample/compute budget. For effective compute, model size is measured in number of parameters (active parameters for MoE model), normalized by 8B. <strong>(Left)</strong> Performance of different models under different sample budget. Our Goedel-Prover-V2-32B outperforms previous models on all sample budget up to 8K. With self-correction the performance is even better. (The tokens for self-correction is much less compared with first round full-proof generation.) Our 8B model has similar scaling curve compared with DeepSeek-Prover-V2-671B, where the performance is slightly better on small passes while little worse on large passes. <strong>(Right)</strong> Performance of different models under different effective compute budget. When taking the number of activated model parameters into account, our 8B model has better performance compared with Kimina-Prover-72B and DeepSeek-Prover-V2-671B.</em>
-  </figcaption>
-</figure>
+| ![Inference Scale Performance](assets/inference_scale_performance.png) | ![Inference Scale Performance Compute Adjusted](assets/inference_scale_performance_compute_adjusted.png) |
+|:--:|:--:|
+
+
+*<p align="center"> <b>Figure 3</b>: Performance on MiniF2F test set under different sample/compute budget. For effective compute, model size is measured in number of parameters (active parameters for MoE model), normalized by 8B.  
+<b>(Left)</b> Performance of different models under different sample budget. Our Goedel-Prover-V2-32B outperforms previous models on all sample budget up to 8K. With self-correction the performance is even better. (The tokens for self-correction is much less compared with first round full-proof generation.) Our 8B model has similar scaling curve compared with DeepSeek-Prover-V2-671B, where the performance is slightly better on small passes while little worse on large passes.  
+<b>(Right)</b> Performance of different models under different effective compute budget. When taking the number of activated model parameters into account, our 8B model has better performance compared with Kimina-Prover-72B and DeepSeek-Prover-V2-671B. </p>*
+
 
 ## 3 Model & Dataset Downloads
 
