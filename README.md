@@ -205,12 +205,12 @@ print(tokenizer.batch_decode(outputs))
 print(time.time() - start)
 ```
 
-## Batch Inference and Self-correction
+## 5. Batch Inference and Self-correction
 
-Coming soon.
+Codes coming soon.
 
 
-### Cite
+### 6. Cite
 ```
 paper
 ```
