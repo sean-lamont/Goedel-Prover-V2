@@ -205,6 +205,9 @@ print(tokenizer.batch_decode(outputs))
 print(time.time() - start)
 ```
 
+## Batch Inference and Self-correction
+
+Coming soon.
 
 
 ### Cite
