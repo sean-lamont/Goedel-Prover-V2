@@ -1,0 +1,7 @@
+collect.py
+output.txt
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.log

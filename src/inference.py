@@ -11,18 +11,14 @@ from utils import *
 
 # if __name__ == "__main__":
 parser = argparse.ArgumentParser()
-# /scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/datasets/minif2f.jsonl
 parser.add_argument('--input_path', default="", type=str)
-# /scratch/gpfs/yl7690/models/DeepSeek-Prover-V1.5-RL
 parser.add_argument('--model_path', default="/scratch/gpfs/yl7690/models/Translator_Qwen2.5-Coder-32B_numina_sonnet_130K_translator_Epoch2_LR1e-4", type=str)
-# results/test
 parser.add_argument('--output_dir', default="/scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/results/translator", type=str)
 parser.add_argument('--split', default="none", type=str)
 parser.add_argument('--n', default=32, type=int)
 parser.add_argument("--max_model_len", default=131072, type=int)#16384
-# parser.add_argument('--pleatu_n', default=1, type=int)
 parser.add_argument('--inference_handler', type=str, choices=["dpskcot", "dpsknoncot", "kiminacot"])
-parser.add_argument('--trunck', default=8, type=int)
+parser.add_argument('--trunck', default=1, type=int)
 parser.add_argument('--gpu', default=4, type=int)
 parser.add_argument("--base_output_template", default=None, type=str)
 parser.add_argument('--node', default=1, type=int)
@@ -71,8 +67,6 @@ if args.correction_round > 0:
         print("Error: previous_run_output_dir logic failed for correction round.")
         exit(1)
     items_for_llm_processing = load_data_for_correction(actual_previous_run_output_dir, args.correction_round, args.n, args.base_output_template)
-    # selected_problems = ['aime_1983_p3', 'mathd_algebra_170', 'mathd_algebra_171', 'mathd_algebra_176', 'mathd_numbertheory_495', 'amc12_2001_p2']
-    # items_for_llm_processing = [x for x in items_for_llm_processing if x["origin_problem_id"] in selected_problems]
 else:  # Initial inference (Round 0)
     if not args.input_path:
         print("Error: --input_path is required for initial inference (correction_round == 0).")
@@ -84,8 +78,6 @@ else:  # Initial inference (Round 0)
         if not idata_orig.get("lean4_code"): continue
         for ij in range(args.n):
             item_for_attempt = idata_orig.copy() 
-            #{"lean4_code": lean4_code_content}  # Start with minimal essential
-            # item_for_attempt.update(idata_orig)  # Add other fields from original data
             item_for_attempt["origin_problem_id"] = origin_id
             item_for_attempt["problem_id"] = f"{origin_id}_g{ij}"  # Suffix for this specific attempt
             item_for_attempt["id_maps"] = [{"origin_problem_id": origin_id},
@@ -186,11 +178,6 @@ for chunk_idx, current_chunk_input_items in enumerate(
     print(F"Saving {chunk_idx}th trunk of round {args.correction_round} to {args.output_dir}")
     jsave(all_processed_records, output_file_path_records)
     jsave(all_inference_code_outputs, output_file_path_inference_codes)
-
-# print(f"All chunks processed for round {args.correction_round}. Finalizing save to {args.output_dir}")
-
-# jsave(all_processed_records, output_file_path_records)
-# jsave(all_inference_code_outputs, output_file_path_inference_codes)
 
 print(f"Outputs saved: \n  Records: {output_file_path_records}\n  Inference Codes (JSONL): {output_file_path_inference_codes}")
 print("Script finished.")
