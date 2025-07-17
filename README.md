@@ -159,5 +159,9 @@ Codes coming soon.
 
 ### 7. Cite
 ```
-paper
+@misc{lin2025goedelproverv2,
+    title={Goedel-Prover-V2: The Strongest Open-Source Theorem Prover to Date},
+    author={Yong Lin and Shange Tang and Bohan Lyu and Ziran Yang and Jui-Hui Chung and Haoyu Zhao  and Lai Jiang and Yihan Geng and Jiawei Ge and Jingruo Sun and Jiayun Wu and Jiri Gesi and David Acuna and Kaiyu Yang and Hongzhou Lin  and Yejin Choi and Danqi Chen and Sanjeev Arora and Chi Jin},
+    year={2025}
+}
 ```
