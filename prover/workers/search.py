@@ -1,5 +1,3 @@
-# codes adapted from https://github.com/deepseek-ai/DeepSeek-Prover-V1.5.git
-# all copyright to https://github.com/deepseek-ai/DeepSeek-Prover-V1.5.git
 import os
 import time
 import copy
@@ -15,7 +13,7 @@ from prover.utils import AttrDict, get_datetime
 
 
 class SearchProcess(mp.Process):
-    def __init__(self, idx, log_dir, tokenizer_path, scheduler, data_loader, sampler, model_args):
+    def __init__(self, idx, log_dir, tokenizer_path, scheduler, data_loader, cfg):
         self.idx = idx
         self.log_dir = Path(log_dir)
         self.scheduler = scheduler
@@ -23,15 +21,15 @@ class SearchProcess(mp.Process):
         super().__init__()
 
         self._current_prob_idx = None
-        sampler_cls = sampler['algorithm']
+        sampler_cls = cfg.sampler['algorithm']
         self.sampler = sampler_cls(
             scheduler=self.scheduler,
             tokenizer_path=tokenizer_path,
             process_print=self.process_print,
             cfg=AttrDict({
-                **sampler,
-                'mode': model_args.mode,
-                'max_tokens': model_args.max_tokens,
+                **cfg.sampler,
+                'mode': cfg.model_args.mode,
+                'max_tokens': cfg.model_args.max_tokens,
             })
         )
     

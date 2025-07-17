@@ -1,5 +1,3 @@
-# codes adapted from https://github.com/deepseek-ai/DeepSeek-Prover-V1.5.git
-# all copyright to https://github.com/deepseek-ai/DeepSeek-Prover-V1.5.git
 import os
 import time
 import json
@@ -19,9 +17,13 @@ from prover.workers import ProcessScheduler
 from prover.utils import AttrDict
 
 
-# HOME_DIR = os.path.expanduser('~')
-DEFAULT_LAKE_PATH = f'/scratch/gpfs/st3812/.elan/bin/lake'
+HOME_DIR = os.path.expanduser('~')
+DEFAULT_LAKE_PATH = f'{HOME_DIR}/.elan/bin/lake'
 DEFAULT_LEAN_WORKSPACE = 'mathlib4/'
+
+# # HOME_DIR = os.path.expanduser('~')
+# DEFAULT_LAKE_PATH = f'/scratch/gpfs/st3812/.elan/bin/lake'
+# DEFAULT_LEAN_WORKSPACE = 'mathlib4/'
 
 
 def verify_lean4_file(code, lake_path=DEFAULT_LAKE_PATH, lean_workspace=DEFAULT_LEAN_WORKSPACE, last_env=None, verbose=False, timeout=300, allTactics=False, ast=False, premises=False, tactics=False):
@@ -37,6 +39,22 @@ def verify_lean4_file(code, lake_path=DEFAULT_LAKE_PATH, lean_workspace=DEFAULT_
         with tempfile.TemporaryFile(mode='w+', encoding='utf-8') as temp_file:
             temp_file.write(message_str + "\r\n\r\n")
             temp_file.seek(0)
+
+
+            # # 20241204 debug
+            # # Print the current working directory
+            # print(f"Current working directory before subprocess: {os.getcwd()}")
+
+            # # Check if the lean_workspace exists
+            # if not os.path.exists(lean_workspace):
+            #     raise FileNotFoundError(f"Lean workspace directory does not exist: {lean_workspace}")
+            # else:
+            #     print(f"Lean workspace exists at: {os.path.abspath(lean_workspace)}")
+
+
+
+
+
             outputs = subprocess.run([lake_path, "exe", 'repl'], stdin=temp_file, capture_output=True, text=True, cwd=lean_workspace, timeout=timeout)
         result = json.loads(outputs.stdout)
         ast_results = lean4_parser(code, result['ast']) if 'ast' in result and result['ast'] else {}
@@ -150,7 +168,7 @@ class Lean4ServerScheduler(ProcessScheduler):
 
 
 if __name__ == '__main__':
-    code = open('mathlib4/.lake/packages/REPL/test/aime_1983_p9.code.in').read()
+    code = open('mathlib4/.lake/packages/REPL/test/aime_1983_p9.in').read()
     lean4_scheduler = Lean4ServerScheduler(max_concurrent_requests=1, timeout=300, memory_limit=10, name='verifier')
     request_id_list = lean4_scheduler.submit_all_request([dict(code=code, ast=True, tactics=True)])
     outputs_list = lean4_scheduler.get_all_request_outputs(request_id_list)
