@@ -65,7 +65,7 @@ The charts above demonstrate the state-of-the-art performance of Goedel-Prover-V
 
 <figure>
   <div class="fig-row">
-    <div class="panel panel-1" style="width:80%;">
+    <div class="panel panel-1" style="width:50%;">
       <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/inference_scale_performance.png?raw=true" alt="…">
     </div>
   </div>
