@@ -64,13 +64,15 @@ The charts above demonstrate the state-of-the-art performance of Goedel-Prover-V
 ## 3. Compelling Scaling Performance
 
 <figure>
-  <div class="fig-row">
-    <div class="panel panel-1" style="width:50%;">
-      <img src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/inference_scale_performance.png?raw=true" alt="…">
-    </div>
+  <div align="center">
+    <img
+      src="https://github.com/Goedel-LM/Goedel-Prover-V2/blob/main/assets/inference_scale_performance.png?raw=true"
+      alt="Performance on MiniF2F under different sample budgets"
+      width="60%"
+    />
   </div>
   <figcaption>
-    <strong>Figure 2</strong>: <em>Performance on MiniF2F test set under different sample budgets.</em>
+    <strong>Figure 2</strong>: <em>Performance on MiniF2F test set under different sample budgets.</em>
   </figcaption>
 </figure>
 
