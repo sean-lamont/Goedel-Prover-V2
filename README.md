@@ -1,5 +1,15 @@
-# Goedel-Prover-V2
+<div align="center">
+    <h1> <a href="http://blog.goedel-prover.com"> <strong>Goedel-Prover-V2: The Strongest Open-Source Theorem Prover to Date</strong></a></h1>
+</div>
 
+<div align="center">
+  
+[![Website](https://img.shields.io/badge/%F0%9F%A4%96%20Homepage-Goedel-536af5?color=536af5&logoColor=white)](http://blog.goedel-prover.com)
+[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20face-Goedel-ffc107?color=ffc107&logoColor=white)](https://huggingface.co/Goedel-LM/Goedel-Prover-V2-32B)
+[![arXiv](https://img.shields.io/badge/arXiv-comming.soon-b31b1b.svg?style=flat)](#)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+ </div>
 
 ## 1. Introduction
 
