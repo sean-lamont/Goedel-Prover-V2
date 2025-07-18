@@ -124,7 +124,7 @@ for round in $(seq 0 $MAX_CORRECTION_ROUNDS); do
 
     # Build and run the compilation command
     # COMPILE_CMD="python src/compile.py \
-    COMPILE_CMD="python src/compile_test.py \
+    COMPILE_CMD="python src/compile.py \
         --input_path ${INFERENCE_OUTPUT_FILE} \
         --output_path ${COMPILE_OUTPUT_FILE} \
         --cpu ${CPUS}"
