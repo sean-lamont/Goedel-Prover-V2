@@ -126,9 +126,8 @@ cd Goedel-Prover-V2
 ```
 
 3. **Install required packages**
-(Left to Shange, probably change the following to conda create...)
 ```sh
-pip install -r requirements.txt
+conda env create -f goedelv2.yml
 ```
 
 4. **Build Mathlib4**
