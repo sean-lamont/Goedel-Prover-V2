@@ -125,8 +125,8 @@ git clone --recurse-submodules https://github.com/Goedel-LM/Goedel-Prover-V2.git
 cd Goedel-Prover-V2
 ```
 
-3. **Install dependencies**
-
+3. **Install required packages**
+(Left to Shange, probably change the following to conda create...)
 ```sh
 pip install -r requirements.txt
 ```
