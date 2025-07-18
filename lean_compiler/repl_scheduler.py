@@ -30,7 +30,7 @@ sys.path.append(os.path.abspath(os.path.join(CURRENT_DIR, "../../")))
 
 IMPORT_TIMEOUT = 100
 # PROOF_TIMEOUT = 120
-PROOF_TIMEOUT = int(os.environ.get("PROOF_TIMEOUT", 120))
+PROOF_TIMEOUT = int(os.environ.get("PROOF_TIMEOUT", 300))
 
 HOME_DIR = os.path.expanduser('~')
 
