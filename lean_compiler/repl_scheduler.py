@@ -22,28 +22,26 @@ def split_list_randomly(lst, k):
     return list(map(list, np.array_split(lst, k)))  # Split into k approximately equal parts
 
 
-from prover.lean.ast_parser import lean4_parser
-from prover.workers import ProcessScheduler
-from prover.utils import AttrDict
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-# HOME_DIR = os.path.expanduser('~')
+sys.path.append(os.path.abspath(os.path.join(CURRENT_DIR, "../../")))
 
-# DEFAULT_LAKE_PATH = f'{HOME_DIR}/.elan/bin/lake'
-# DEFAULT_LAKE_PATH = f'/scratch/gpfs/yl7690/.elan/bin/lake'
-DEFAULT_LAKE_PATH = f'/scratch/gpfs/st3812/.elan/bin/lake'
-DEFAULT_LEAN_WORKSPACE = 'mathlib4/'
-# DEFAULT_LEAN_WORKSPACE = '/scratch/gpfs/yl7690/projects/DeepSeek-Prover-V1.5/mathlib4/'
-# DEFAULT_LEAN_WORKSPACE = '/scratch/gpfs/CHIJ/Shange/Deepseek/mathlib4'
+
+IMPORT_TIMEOUT = 100
+# PROOF_TIMEOUT = 120
+PROOF_TIMEOUT = int(os.environ.get("PROOF_TIMEOUT", 120))
+
+HOME_DIR = os.path.expanduser('~')
+
+DEFAULT_LAKE_PATH = f'{HOME_DIR}/.elan/bin/lake'
+
+
+DEFAULT_LEAN_WORKSPACE="mathlib4/"
+
+
 
 DEFAULT_IMPORTS = "import Mathlib\nimport Aesop\n\nset_option maxHeartbeats 0\n\nopen BigOperators Real Nat Topology Rat\n\n"
-
-# DEFAULT_IMPORTS = "import Mathlib\nimport Aesop\n\nset_option maxHeartbeats 500000\n\nopen BigOperators Real Nat Topology Rat\n\n"
-
-
-
-IMPORT_TIMEOUT = 300
-PROOF_TIMEOUT = 300
 
 
 statement_sample = "\n/-- Show that $\frac{9x^2\\sin^2 x + 4}{x\\sin x} \\geq 12$ for $0 < x < \\pi$.-/\ntheorem aime_1983_p9 (x : ℝ) (h₀ : 0 < x ∧ x < Real.pi) :\n  12 ≤ (9 * (x ^ 2 * Real.sin x ^ 2) + 4) / (x * Real.sin x) :="
@@ -58,23 +56,24 @@ proof_code_sample_4 = "BUG" * 4096
 
 proof_code_sample_5 = DEFAULT_IMPORTS
 
+proof_code_sample_nonneg="\n/-- Suppose $a, b, c$ are the sides of a triangle. Prove that \n\n$a^2(b+c-a)+b^2(c+a-b)+c^2(a+b-c)\\le{3abc}.$-/\ntheorem imo_1964_p2 (a b c : \u211d) (h\u2080 : 0 < a \u2227 0 < b \u2227 0 < c) (h\u2081 : c < a + b) (h\u2082 : b < a + c)\n    (h\u2083 : a < b + c) :\n    a ^ 2 * (b + c - a) + b ^ 2 * (c + a - b) + c ^ 2 * (a + b - c) \u2264 3 * a * b * c := by\n  /-\n  To prove the inequality \\(a^2(b+c-a) + b^2(c+a-b) + c^2(a+b-c) \\leq 3abc\\) for the sides \\(a, b, c\\) of a triangle, we can use the non-negativity of squares and some algebraic manipulations. Specifically, we will use the fact that the square of any real number is non-negative, and then apply these properties to the differences \\(a - b\\), \\(b - c\\), and \\(c - a\\). By leveraging these non-negative terms, we can derive the desired inequality.\n  -/\n  -- Use the non-negativity of squares to derive the inequality.\n  -- Specifically, we use the fact that the square of any real number is non-negative.\n  nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (c - a),\n    sq_nonneg (a + b - c), sq_nonneg (b + c - a), sq_nonneg (c + a - b)]"
 
 # proof_code_list_sample = [proof_code_sample] * 1
 # proof_code_list_sample = [statement_sample + proof_code_sample_1, statement_sample + proof_code_sample_2] * 2
 
 # proof_code_list_sample = ([{"name": "test_problem", "code": statement_sample + proof_code_sample_1}] + [{"name": "test_problem", "code": statement_sample + proof_code_sample_2}]) * 1
 
-proof_code_list_sample = [{"name": "test_problem", "code": statement_sample + proof_code_sample_1}] * 3
+# proof_code_list_sample = [{"name": "test_problem", "code": statement_sample + proof_code_sample_1}] * 1
+
+proof_code_list_sample = [{"name": "nonneg_problem", "code": statement_sample + proof_code_sample_2}]
 
 
 # proof_code_list_sample.append({'name': 'timeout_problem', 'code': proof_code_sample_3})
 # proof_code_list_sample.append({'name': 'timeout_problem', 'code': proof_code_sample_5})
 
-problem_list_sample = [proof_code_list_sample] * 1 #each item in problem_list_sample is a proof_code_list which I want a single process to do
+problem_list_sample = [proof_code_list_sample] * 64 #each item in problem_list_sample is a proof_code_list which I want a single process to do
 
-
-
-def initiate_child():
+def initiate_child(imports = DEFAULT_IMPORTS):
     # Start the Lean 4 REPL using pexpect
     # Note: Adjust the command if necessary for your setup
     # child = pexpect.spawn('stty -icanon', cwd=lean_workspace, encoding='utf-8', maxread=1, echo=False)
@@ -90,14 +89,14 @@ def initiate_child():
 
     child.sendline(f"{DEFAULT_LAKE_PATH} exe repl")
 
-    response = send_command_and_wait(child, DEFAULT_IMPORTS, timeout=IMPORT_TIMEOUT)
+    response = send_command_and_wait(child, imports, timeout=IMPORT_TIMEOUT)
 
     # print(f"Initializing Lean REPL: (PID: {child.pid})", flush = True)
     # return child
-    # print(response, flush = True)
+
     return child, response
 
-def send_command_and_wait(child, command, env=None, timeout=PROOF_TIMEOUT):
+def send_command_and_wait(child, command, allTactics=False, ast=False, premises=False, tactics=False, env=None, timeout=PROOF_TIMEOUT, imports=DEFAULT_IMPORTS):
     """
     Send a JSON command to the Lean REPL and wait for the output.
     The REPL output is expected to be a JSON dict (possibly spanning multiple lines)
@@ -107,7 +106,7 @@ def send_command_and_wait(child, command, env=None, timeout=PROOF_TIMEOUT):
     if env is None:
         json_cmd = json.dumps({"cmd": command})
     else:
-        json_cmd = json.dumps({"cmd": command, "env": env})
+        json_cmd = json.dumps({"cmd": command, "allTactics" : allTactics, "ast":ast, "premises" : premises, "tactics" : tactics, "env": env})
 
     child.sendline(json_cmd)
     child.sendline("")  # This sends the extra newline.
@@ -115,7 +114,7 @@ def send_command_and_wait(child, command, env=None, timeout=PROOF_TIMEOUT):
 
     # import pdb; pdb.set_trace()
 
-    code = DEFAULT_IMPORTS + command
+    code = imports + command
     try:
         # Wait for the output delimiter (double newline)
         child.expect(["\r\n\r\n", "\n\n"], timeout=timeout)
@@ -127,12 +126,14 @@ def send_command_and_wait(child, command, env=None, timeout=PROOF_TIMEOUT):
         # problem_id = proof_code_list[i]["name"]
         try:
             result = json.loads(block)
+            ast_results = lean4_parser(command, result['ast']) if 'ast' in result and result['ast'] else {}
             parsed_result = {
                 "sorries": result.get("sorries", []),
                 "tactics": result.get("tactics", []),
                 "errors": [m for m in result.get("messages", []) if m.get("severity") == "error"],
                 "warnings": [m for m in result.get("messages", []) if m.get("severity") == "warning"],
                 "infos": [m for m in result.get("messages", []) if m.get("severity") == "info"],
+                "ast" : ast_results,
                 # "verified_code": code,
                 # "problem_id": problem_id
                 "system_errors": None
@@ -168,7 +169,7 @@ def send_command_and_wait(child, command, env=None, timeout=PROOF_TIMEOUT):
         response = {"code": command, "compilation_result": {"pass": False, "complete": False, "system_errors": f"UNEXPECTED ERROR: {e}"}}
     return response
 
-def worker(worker_id, task_queue, result_list, total_restarts, lock):
+def worker(worker_id, task_queue, result_list, total_restarts, lock, allTactics=False, ast=False, premises=False, tactics=False, timeout=PROOF_TIMEOUT, imports = DEFAULT_IMPORTS):
     """Worker function that continuously picks tasks and executes them."""
     child, _ = initiate_child()  # Start Lean 4 REPL
     print(f"Worker {worker_id} started Lean REPL.", flush = True)
@@ -202,7 +203,7 @@ def worker(worker_id, task_queue, result_list, total_restarts, lock):
 
         else:
 
-            response = send_command_and_wait(child, proof_code, env=0)  # Run proof
+            response = send_command_and_wait(child, proof_code, env=0, allTactics=allTactics, ast=ast, premises=premises, tactics=tactics, imports = imports)  # Run proof
 
 
             response["name"] = proof_name
@@ -239,7 +240,7 @@ def worker(worker_id, task_queue, result_list, total_restarts, lock):
                         print(f"Worker {worker_id}: No more proofs left. Not restarting REPL.", flush=True)
                         break  # Exit instead of restarting
                     else:
-                        child , _ = initiate_child()
+                        child , _ = initiate_child(imports = imports)
 
                     # print("EOF restart", previous_id, "replaced with", child.pid, flush = True) 
                 else : 
@@ -254,7 +255,7 @@ def worker(worker_id, task_queue, result_list, total_restarts, lock):
 
                         break  # Exit instead of restarting
                     else:
-                        child , _ = initiate_child()
+                        child , _ = initiate_child(imports = imports)
 
                     # print("restart because of", response["compilation_result"]["system_errors"], previous_id, "replaced with", child.pid, flush = True) 
                     # print("Timemout restart", previous_id, "replaced with", child.pid, flush = True) 
@@ -270,7 +271,7 @@ def worker(worker_id, task_queue, result_list, total_restarts, lock):
 
 
 
-def scheduler(proofs, num_workers=64):
+def scheduler(proofs, num_workers=64, allTactics=False, ast=False, premises=False, tactics=False, timeout = PROOF_TIMEOUT, imports = DEFAULT_IMPORTS):
     # proofs is a list of all the proofs that need to verify
 
     """Scheduler function that launches REPL processes and assigns tasks to CPUs."""
@@ -290,7 +291,8 @@ def scheduler(proofs, num_workers=64):
     # Start worker processes
     workers = []
     for i in range(num_workers):
-        process = mp.Process(target=worker, args=(i, task_queue, result_list, total_restarts, lock))
+        # process = mp.Process(target=worker, args=(i, task_queue, result_list, total_restarts, lock))
+        process = mp.Process(target=worker, args=(i, task_queue, result_list, total_restarts, lock, allTactics, ast, premises, tactics, timeout, imports))
         process.start()
         workers.append(process)
 
@@ -327,6 +329,6 @@ def scheduler(proofs, num_workers=64):
 if __name__ == '__main__':
 
 
-    print(scheduler(proof_code_list_sample, num_workers=1))
+    print(scheduler(proof_code_list_sample, num_workers=16, allTactics=False, ast=True, premises=True, tactics=False))
 
-
+    # scheduler(proof_code_list_sample, num_workers=1, ast=True)
