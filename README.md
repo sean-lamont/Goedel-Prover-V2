@@ -130,6 +130,14 @@ cd Goedel-Prover-V2
 conda env create -f goedelv2.yml
 ```
 
+If you encounter installation error when installing packages (flash-attn), please run the following:
+
+```sh
+conda activate goedelv2
+pip install torch==2.6.0
+conda env update --file goedelv2.yml
+```
+
 4. **Build Mathlib4**
 
 ```sh
