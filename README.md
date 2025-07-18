@@ -137,6 +137,14 @@ cd mathlib4
 lake build
 ```
 
+5. **Test Lean 4 and mathlib4 installation**
+
+```sh
+cd ..
+python lean_compiler/repl_scheduler.py
+```
+If there is any error, reinstall Lean 4 and rebuild mathlib4.
+
 ## 6. Quick Start
 You can directly use [Huggingface's Transformers](https://github.com/huggingface/transformers) for model inference.
 
