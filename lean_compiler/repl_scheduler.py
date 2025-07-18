@@ -126,7 +126,8 @@ def send_command_and_wait(child, command, allTactics=False, ast=False, premises=
         # problem_id = proof_code_list[i]["name"]
         try:
             result = json.loads(block)
-            ast_results = lean4_parser(command, result['ast']) if 'ast' in result and result['ast'] else {}
+            # ast_results = lean4_parser(command, result['ast']) if 'ast' in result and result['ast'] else {}
+            ast_results = {}
             parsed_result = {
                 "sorries": result.get("sorries", []),
                 "tactics": result.get("tactics", []),
@@ -329,6 +330,6 @@ def scheduler(proofs, num_workers=64, allTactics=False, ast=False, premises=Fals
 if __name__ == '__main__':
 
 
-    print(scheduler(proof_code_list_sample, num_workers=16, allTactics=False, ast=True, premises=True, tactics=False))
+    print(scheduler(proof_code_list_sample, num_workers=16, allTactics=False, ast=False, premises=False, tactics=False))
 
     # scheduler(proof_code_list_sample, num_workers=1, ast=True)
