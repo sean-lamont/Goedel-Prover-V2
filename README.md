@@ -121,8 +121,8 @@ We follow [DeepSeek-Prover-V1.5](https://github.com/deepseek-ai/DeepSeek-Prover-
 2. **Clone the repository**
 
 ```sh
-git clone --recurse-submodules git@github.com:deepseek-ai/DeepSeek-Prover-V1.5.git
-cd DeepSeek-Prover-V1.5
+git clone --recurse-submodules https://github.com/Goedel-LM/Goedel-Prover-V2.git
+cd Goedel-Prover-V2
 ```
 
 3. **Install dependencies**
