@@ -105,6 +105,39 @@ This model is being released to aid other open-source projects, including those 
 
 ## 5. Environment Setup
 
+We follow [DeepSeek-Prover-V1.5](https://github.com/deepseek-ai/DeepSeek-Prover-V1.5), which uses Lean 4 version 4.9 and the corresponding Mathlib. Please refer to the following instructions to set up the environments.
+
+### Requirements
+
+* Supported platform: Linux
+* Python 3.10
+
+### Installation
+
+1. **Install Lean 4**
+
+   Follow the instructions on the [Lean 4 installation page](https://leanprover.github.io/lean4/doc/quickstart.html) to set up Lean 4.
+
+2. **Clone the repository**
+
+```sh
+git clone --recurse-submodules git@github.com:deepseek-ai/DeepSeek-Prover-V1.5.git
+cd DeepSeek-Prover-V1.5
+```
+
+3. **Install dependencies**
+
+```sh
+pip install -r requirements.txt
+```
+
+4. **Build Mathlib4**
+
+```sh
+cd mathlib4
+lake build
+```
+
 ## 6. Quick Start
 You can directly use [Huggingface's Transformers](https://github.com/huggingface/transformers) for model inference.
 
