@@ -30,7 +30,7 @@ set -e
 # --- Model and Data Paths ---
 # MODEL_PATH="/path/to/your/llm/model"  # Path to your Large Language Model
 # DATA_PATH="path/to/your/input_problems.jsonl" # Path to your input problems file (e.g., minif2f.jsonl)
-MODEL_PATH="/scratch/gpfs/PLI/yong/averaged_models/Qwen3-32B-RLv4-90-avg-0_70"
+MODEL_PATH="Goedel-LM/Goedel-Prover-V2-8B"
 DATA_PATH="dataset/test.jsonl" # Example path
 
 # --- Output Directory ---
