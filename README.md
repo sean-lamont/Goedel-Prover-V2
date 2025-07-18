@@ -99,7 +99,7 @@ We release our Goedel-Prover-V2 models and the new MathOlympiadBench benchmark t
 
 </div>
 
-<strong>MathOlympiadBench</strong> (Math Olympiad Bench) comprises human-verified formalizations of Olympiad-level mathematical competition problems, sourced from Compfiles and IMOSLLean4 repository. MathOlympiadBench contains 360 problems, including 158 IMO problems from 1959 to 2024, 131 IMO shortlist problems covering 2006 to 2023, 68 regional mathematical Olympiad problems, and 3 additional mathematical puzzles. 
+<strong>MathOlympiadBench</strong> (Math Olympiad Bench) comprises human-verified formalizations of Olympiad-level mathematical competition problems, sourced from [Compfiles](https://github.com/dwrensha/compfiles) and [IMOSLLean4](https://github.com/mortarsanjaya/IMOSLLean4) repository. MathOlympiadBench contains 360 problems, including 158 IMO problems from 1959 to 2024, 131 IMO shortlist problems covering 2006 to 2023, 68 regional mathematical Olympiad problems, and 3 additional mathematical puzzles. 
 
 This model is being released to aid other open-source projects, including those geared towards the upcoming IMO competition. A full paper with all details will be released in the coming weeks.
 
