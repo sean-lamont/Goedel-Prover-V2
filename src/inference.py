@@ -20,9 +20,9 @@ parser.add_argument("--max_model_len", default=131072, type=int)#16384
 parser.add_argument('--inference_handler', type=str, choices=["dpskcot", "dpsknoncot", "kiminacot"])
 parser.add_argument('--trunck', default=1, type=int)
 parser.add_argument('--gpu', default=4, type=int)
-parser.add_argument("--base_output_template", default=None, type=str)
+parser.add_argument("--base_output_template", default="qwen", type=str)
 parser.add_argument('--node', default=1, type=int)
-parser.add_argument('--error_thres', default=False)
+parser.add_argument('--error_thres', default=True)
 parser.add_argument('--temp',  default=1.0, type=float)
 
 parser.add_argument('--correction_round', type=int, default=0,

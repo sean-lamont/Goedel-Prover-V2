@@ -30,8 +30,10 @@ set -e
 # --- Model and Data Paths ---
 # MODEL_PATH="/path/to/your/llm/model"  # Path to your Large Language Model
 # DATA_PATH="path/to/your/input_problems.jsonl" # Path to your input problems file (e.g., minif2f.jsonl)
-MODEL_PATH="Goedel-LM/Goedel-Prover-V2-8B"
+# MODEL_PATH="/scratch/gpfs/PLI/yong/averaged_models/Qwen3-32B-RLv4-90-avg-0_70"
+MODEL_PATH="/scratch/gpfs/CHIJ/yong/trained_models/Qwen3-8B-a2-1e-5/Qwen3-8B-a2-1e-5-checkpoint-6500"
 DATA_PATH="dataset/test.jsonl" # Example path
+# DATA_PATH="dataset/test_four.jsonl" # Example path
 
 # --- Output Directory ---
 # All generated files (inference results, compilation logs, reports) will be saved here.
@@ -40,15 +42,16 @@ BASE_OUTPUT_DIR="results/run_${TIMESTAMP}"
 
 # --- Inference Settings ---
 INFERENCE_HANDLER="dpskcot" # Inference handler, options: "dpskcot", "dpsknoncot", "kiminacot"
-GPUS=4                    # Number of GPUs to use for vLLM inference
-NUM_SAMPLES_INITIAL=8     # Number of proof samples to generate per problem in the initial round (Round 0)
+# GPUS=4                    # Number of GPUs to use for vLLM inference
+GPUS=1
+NUM_SAMPLES_INITIAL=1     # Number of proof samples to generate per problem in the initial round (Round 0)
 NUM_SAMPLES_CORRECTION=2  # Number of correction samples to generate per failed attempt in correction rounds (Round > 0)
 TEMPERATURE=1.0           # Inference temperature
 MAX_MODEL_LEN=40960       # Maximum model sequence length
 
 # --- Compilation Settings ---
-CPUS=32                   # Number of CPU cores to use for parallel compilation
-
+# CPUS=32                   # Number of CPU cores to use for parallel compilation
+CPUS=4   
 # --- Pipeline Control ---
 # Maximum number of correction rounds (0 for initial inference only, 1 for initial + one correction round, etc.)
 MAX_CORRECTION_ROUNDS=2
@@ -120,6 +123,7 @@ for round in $(seq 0 $MAX_CORRECTION_ROUNDS); do
     COMPILE_OUTPUT_FILE="${BASE_OUTPUT_DIR}/code_compilation_repl${SUFFIX}.json"
 
     # Build and run the compilation command
+    # COMPILE_CMD="python src/compile.py \
     COMPILE_CMD="python src/compile.py \
         --input_path ${INFERENCE_OUTPUT_FILE} \
         --output_path ${COMPILE_OUTPUT_FILE} \

@@ -13,7 +13,8 @@ def get_error_str(code, errors, error_thres):
     
     # error_thres = False
 
-    error_num_thres = 8 if error_thres else error_num_thres
+    # error_num_thres = 8 if error_thres else error_num_thres
+    error_num_thres = 8 if error_thres else len(errors)
 
     for i, error in enumerate(errors[:error_num_thres]):
         start_line = error['pos']['line'] - 1
