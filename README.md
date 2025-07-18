@@ -103,7 +103,9 @@ We release our Goedel-Prover-V2 models and the new MathOlympiadBench benchmark t
 
 This model is being released to aid other open-source projects, including those geared towards the upcoming IMO competition. A full paper with all details will be released in the coming weeks.
 
-## 5. Quick Start
+## 5. Environment Setup
+
+## 6. Quick Start
 You can directly use [Huggingface's Transformers](https://github.com/huggingface/transformers) for model inference.
 
 ```
@@ -152,12 +154,12 @@ print(tokenizer.batch_decode(outputs))
 print(time.time() - start)
 ```
 
-## 6. Batch Inference and Self-correction
+## 7. Batch Inference and Self-correction
 
 Codes coming soon.
 
 
-### 7. Cite
+### 8. Citation
 ```
 @misc{lin2025goedelproverv2,
     title={Goedel-Prover-V2: The Strongest Open-Source Theorem Prover to Date},
