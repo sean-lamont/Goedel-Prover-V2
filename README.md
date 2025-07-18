@@ -196,7 +196,9 @@ print(time.time() - start)
 
 ## 7. Batch Inference and Self-correction
 
-Codes coming soon.
+```sh
+bash scripts/pipeline.sh
+```
 
 
 ### 8. Citation
