@@ -46,7 +46,7 @@ The charts above demonstrate the state-of-the-art performance of Goedel-Prover-V
       </tr>
     </thead>
     <tbody>
-      <tr><td>1</td><td><strong>Goedel-Prover-V2-32B (self-correction mode)</strong></td><td><strong>64</strong></td><td><strong>Pass@64</strong></td></tr>
+      <tr><td>1</td><td><strong>Goedel-Prover-V2-32B (self-correction mode)</strong></td><td><strong>86</strong></td><td><strong>Pass@192</strong></td></tr>
       <tr><td>1</td><td><strong>Goedel-Prover-V2-32B (self-correction mode)</strong></td><td><strong>57</strong></td><td><strong>Pass@32</strong></td></tr>
       <tr><td>1</td><td><strong>Goedel-Prover-V2-32B</strong></td><td><strong>43</strong></td><td><strong>Pass@32</strong></td></tr>
       <tr><td>2</td><td>DeepSeek‑Prover‑V2-671B</td><td>47</td><td>Pass@1024</td></tr>
