@@ -156,7 +156,7 @@ If there is any error, reinstall Lean 4 and rebuild mathlib4.
 ## 6. Quick Start
 You can directly use [Huggingface's Transformers](https://github.com/huggingface/transformers) for model inference.
 
-```
+```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 torch.manual_seed(30)
@@ -210,7 +210,7 @@ bash scripts/pipeline.sh
 
 
 ### 8. Citation
-```
+```bibtex
 @misc{lin2025goedelproverv2,
     title={Goedel-Prover-V2: The Strongest Open-Source Theorem Prover to Date},
     author={Yong Lin and Shange Tang and Bohan Lyu and Ziran Yang and Jui-Hui Chung and Haoyu Zhao  and Lai Jiang and Yihan Geng and Jiawei Ge and Jingruo Sun and Jiayun Wu and Jiri Gesi and David Acuna and Kaiyu Yang and Hongzhou Lin  and Yejin Choi and Danqi Chen and Sanjeev Arora and Chi Jin},
