@@ -153,6 +153,8 @@ python lean_compiler/repl_scheduler.py
 ```
 If there is any error, reinstall Lean 4 and rebuild mathlib4.
 
+If you have installed Lean and Mathlib for other projects and want to use the pre-installed things, note that you might need to modify `DEFAULT_LAKE_PATH` and `DEFAULT_LEAN_WORKSPACE` in `lean_compiler/repl_scheduler.py`.
+
 ## 6. Quick Start
 You can directly use [Huggingface's Transformers](https://github.com/huggingface/transformers) for model inference.
 
