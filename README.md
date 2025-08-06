@@ -6,7 +6,7 @@
   
 [![Website](https://img.shields.io/badge/%F0%9F%A4%96%20Homepage-Goedel-536af5?color=536af5&logoColor=white)](http://blog.goedel-prover.com)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20face-Goedel-ffc107?color=ffc107&logoColor=white)](https://huggingface.co/Goedel-LM/Goedel-Prover-V2-32B)
-[![arXiv](https://img.shields.io/badge/arXiv-comming.soon-b31b1b.svg?style=flat)](#)
+[![arXiv](https://img.shields.io/badge/arXiv-2508.03613-b31b1b.svg?style=flat)](#)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
  </div>
@@ -213,9 +213,11 @@ bash scripts/pipeline.sh
 
 ### 8. Citation
 ```bibtex
-@misc{lin2025goedelproverv2,
-    title={Goedel-Prover-V2: The Strongest Open-Source Theorem Prover to Date},
-    author={Yong Lin and Shange Tang and Bohan Lyu and Ziran Yang and Jui-Hui Chung and Haoyu Zhao  and Lai Jiang and Yihan Geng and Jiawei Ge and Jingruo Sun and Jiayun Wu and Jiri Gesi and David Acuna and Kaiyu Yang and Hongzhou Lin  and Yejin Choi and Danqi Chen and Sanjeev Arora and Chi Jin},
-    year={2025}
+@article{lin2025goedelproverv2,
+      title={Goedel-Prover-V2: Scaling Formal Theorem Proving with Scaffolded Data Synthesis and Self-Correction}, 
+      author={Yong Lin and Shange Tang and Bohan Lyu and Ziran Yang and Jui-Hui Chung and Haoyu Zhao and Lai Jiang and Yihan Geng and Jiawei Ge and Jingruo Sun and Jiayun Wu and Jiri Gesi and Ximing Lu and David Acuna and Kaiyu Yang and Hongzhou Lin and Yejin Choi and Danqi Chen and Sanjeev Arora and Chi Jin},
+      year={2025},
+      journal={arXiv preprint arXiv:2508.03613},
+      url={https://arxiv.org/abs/2508.03613}, 
 }
 ```
