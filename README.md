@@ -214,10 +214,9 @@ bash scripts/pipeline.sh
 ### 8. Citation
 ```bibtex
 @article{lin2025goedelproverv2,
-      title={Goedel-Prover-V2: Scaling Formal Theorem Proving with Scaffolded Data Synthesis and Self-Correction}, 
-      author={Yong Lin and Shange Tang and Bohan Lyu and Ziran Yang and Jui-Hui Chung and Haoyu Zhao and Lai Jiang and Yihan Geng and Jiawei Ge and Jingruo Sun and Jiayun Wu and Jiri Gesi and Ximing Lu and David Acuna and Kaiyu Yang and Hongzhou Lin and Yejin Choi and Danqi Chen and Sanjeev Arora and Chi Jin},
-      year={2025},
-      journal={arXiv preprint arXiv:2508.03613},
-      url={https://arxiv.org/abs/2508.03613}, 
+  title={Goedel-Prover-V2: Scaling Formal Theorem Proving with Scaffolded Data Synthesis and Self-Correction},
+  author={Lin, Yong and Tang, Shange and Lyu, Bohan and Yang, Ziran and Chung, Jui-Hui and Zhao, Haoyu and Jiang, Lai and Geng, Yihan and Ge, Jiawei and Sun, Jingruo and others},
+  journal={arXiv preprint arXiv:2508.03613},
+  year={2025}
 }
 ```
