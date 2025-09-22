@@ -35,8 +35,6 @@ PROOF_TIMEOUT = int(os.environ.get("PROOF_TIMEOUT", 300))
 HOME_DIR = os.path.expanduser('~')
 
 DEFAULT_LAKE_PATH = f'{HOME_DIR}/.elan/bin/lake'
-
-
 DEFAULT_LEAN_WORKSPACE="mathlib4/"
 
 

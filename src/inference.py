@@ -74,6 +74,7 @@ else:  # Initial inference (Round 0)
     initial_data_list = handler.load_split(args.input_path, args.split)
 
     for idata_orig in initial_data_list:
+        # print (idata_orig)
         origin_id = idata_orig.get("origin_problem_id", idata_orig.get('problem_id', idata_orig.get('name')))
         if not idata_orig.get("lean4_code"): continue
         for ij in range(args.n):

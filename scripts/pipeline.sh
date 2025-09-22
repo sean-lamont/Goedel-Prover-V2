@@ -30,17 +30,22 @@ set -e
 # --- Model and Data Paths ---
 # MODEL_PATH="/path/to/your/llm/model"  # Path to your Large Language Model
 # DATA_PATH="path/to/your/input_problems.jsonl" # Path to your input problems file (e.g., minif2f.jsonl)
+
 MODEL_PATH="Goedel-LM/Goedel-Prover-V2-8B"
-DATA_PATH="dataset/test.jsonl" # Example path
+
+#DATA_PATH="dataset/minif2f.jsonl" # Example path
+DATA_PATH="goedel_pset_split/goedel_pset_part_1.jsonl" # Example path
 
 # --- Output Directory ---
 # All generated files (inference results, compilation logs, reports) will be saved here.
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BASE_OUTPUT_DIR="results/run_${TIMESTAMP}"
+#BASE_OUTPUT_DIR="results/run_${TIMESTAMP}"
+#BASE_OUTPUT_DIR="results/run_minif2f"
+BASE_OUTPUT_DIR="results/run_goedel_test"
 
 # --- Inference Settings ---
 INFERENCE_HANDLER="dpskcot" # Inference handler, options: "dpskcot", "dpsknoncot", "kiminacot"
-GPUS=4                    # Number of GPUs to use for vLLM inference
+GPUS=2                    # Number of GPUs to use for vLLM inference
 NUM_SAMPLES_INITIAL=8     # Number of proof samples to generate per problem in the initial round (Round 0)
 NUM_SAMPLES_CORRECTION=2  # Number of correction samples to generate per failed attempt in correction rounds (Round > 0)
 TEMPERATURE=1.0           # Inference temperature
