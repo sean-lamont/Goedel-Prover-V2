@@ -12,6 +12,7 @@ def process_goedel_pset(dataset_name, output_dir, num_files=10000):
 
     # Load the dataset
     dataset = load_dataset(dataset_name)['train']
+    dataset = dataset.shuffle(seed=42)
 
     # Split the dataset into num_files parts
     chunk_size = len(dataset) // num_files
