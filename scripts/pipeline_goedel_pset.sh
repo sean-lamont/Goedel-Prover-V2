@@ -41,29 +41,29 @@ DATA_PATH="goedel_pset_split" # Example path
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 #BASE_OUTPUT_DIR="results/run_${TIMESTAMP}"
-#BASE_OUTPUT_DIR="results/run_minif2f"
-BASE_OUTPUT_DIR="results/run_goedel_pset"
+#ROOT_OUTPUT_DIR="results/run_minif2f"
+ROOT_OUTPUT_DIR="results/run_goedel_pset"
 
 # --- Inference Settings ---
 INFERENCE_HANDLER="dpskcot" # Inference handler, options: "dpskcot", "dpsknoncot", "kiminacot"
-GPUS=2                    # Number of GPUs to use for vLLM inference
-NUM_SAMPLES_INITIAL=4     # Number of proof samples to generate per problem in the initial round (Round 0)
-NUM_SAMPLES_CORRECTION=2  # Number of correction samples to generate per failed attempt in correction rounds (Round > 0)
+GPUS=1                    # Number of GPUs to use for vLLM inference
+NUM_SAMPLES_INITIAL=1     # Number of proof samples to generate per problem in the initial round (Round 0)
+NUM_SAMPLES_CORRECTION=1  # Number of correction samples to generate per failed attempt in correction rounds (Round > 0)
 TEMPERATURE=1.0           # Inference temperature
 MAX_MODEL_LEN=40960       # Maximum model sequence length
 
 # --- Compilation Settings ---
-CPUS=32                   # Number of CPU cores to use for parallel compilation
+CPUS=32               # Number of CPU cores to use for parallel compilation
 
 # --- Pipeline Control ---
 # Maximum number of correction rounds (0 for initial inference only, 1 for initial + one correction round, etc.)
-MAX_CORRECTION_ROUNDS=3
+MAX_CORRECTION_ROUNDS=2
 
 # =============================================================================
 
 # Create the output directory
-mkdir -p "$BASE_OUTPUT_DIR"
-echo "All outputs will be saved to: ${BASE_OUTPUT_DIR}"
+mkdir -p "$ROOT_OUTPUT_DIR"
+echo "All outputs will be saved to: ${ROOT_OUTPUT_DIR}"
 
 # loop through all files in the input directory if it's a directory
 if [ -d "$DATA_PATH" ]; then
@@ -81,7 +81,15 @@ if [ -d "$DATA_PATH" ]; then
         DATA_PATH="$file"
 
 #        BASE_OUTPUT_DIR="${BASE_OUTPUT_DIR}_$file"
-        BASE_OUTPUT_DIR="${BASE_OUTPUT_DIR}/$(basename "$file" .jsonl)"
+        BASE_OUTPUT_DIR="${ROOT_OUTPUT_DIR}/$(basename "$file" .jsonl)"
+
+
+        if [ -d "$BASE_OUTPUT_DIR" ]; then
+          echo "Directory $BASE_OUTPUT_DIR exists, skipping"
+          continue
+          fi
+
+
         mkdir -p "$BASE_OUTPUT_DIR"
 
         # --- Main Loop ---

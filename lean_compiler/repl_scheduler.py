@@ -35,7 +35,8 @@ PROOF_TIMEOUT = int(os.environ.get("PROOF_TIMEOUT", 300))
 HOME_DIR = os.path.expanduser('~')
 
 DEFAULT_LAKE_PATH = f'{HOME_DIR}/.elan/bin/lake'
-DEFAULT_LEAN_WORKSPACE="mathlib4/"
+DEFAULT_LEAN_WORKSPACE="/workspace/Goedel-Prover-V2/mathlib4/"
+# DEFAULT_LEAN_WORKSPACE="mathlib4/"
 
 
 
@@ -56,10 +57,10 @@ proof_code_sample_5 = DEFAULT_IMPORTS
 
 proof_code_sample_nonneg="\n/-- Suppose $a, b, c$ are the sides of a triangle. Prove that \n\n$a^2(b+c-a)+b^2(c+a-b)+c^2(a+b-c)\\le{3abc}.$-/\ntheorem imo_1964_p2 (a b c : \u211d) (h\u2080 : 0 < a \u2227 0 < b \u2227 0 < c) (h\u2081 : c < a + b) (h\u2082 : b < a + c)\n    (h\u2083 : a < b + c) :\n    a ^ 2 * (b + c - a) + b ^ 2 * (c + a - b) + c ^ 2 * (a + b - c) \u2264 3 * a * b * c := by\n  /-\n  To prove the inequality \\(a^2(b+c-a) + b^2(c+a-b) + c^2(a+b-c) \\leq 3abc\\) for the sides \\(a, b, c\\) of a triangle, we can use the non-negativity of squares and some algebraic manipulations. Specifically, we will use the fact that the square of any real number is non-negative, and then apply these properties to the differences \\(a - b\\), \\(b - c\\), and \\(c - a\\). By leveraging these non-negative terms, we can derive the desired inequality.\n  -/\n  -- Use the non-negativity of squares to derive the inequality.\n  -- Specifically, we use the fact that the square of any real number is non-negative.\n  nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (c - a),\n    sq_nonneg (a + b - c), sq_nonneg (b + c - a), sq_nonneg (c + a - b)]"
 
-# proof_code_list_sample = [proof_code_sample] * 1
-# proof_code_list_sample = [statement_sample + proof_code_sample_1, statement_sample + proof_code_sample_2] * 2
+# proof_code_list_sample = [proof_code_sample] * 1 # proof_code_list_sample = [statement_sample + proof_code_sample_1, statement_sample + proof_code_sample_2] * 2
 
 # proof_code_list_sample = ([{"name": "test_problem", "code": statement_sample + proof_code_sample_1}] + [{"name": "test_problem", "code": statement_sample + proof_code_sample_2}]) * 1
+
 
 # proof_code_list_sample = [{"name": "test_problem", "code": statement_sample + proof_code_sample_1}] * 1
 
@@ -77,20 +78,28 @@ def initiate_child(imports = DEFAULT_IMPORTS):
     # child = pexpect.spawn('stty -icanon', cwd=lean_workspace, encoding='utf-8', maxread=1, echo=False)
 
     child = pexpect.spawn(f"/bin/bash", cwd=DEFAULT_LEAN_WORKSPACE, encoding='utf-8', maxread=1, echo=False)
-    
-    # # Uncomment the next line to see the REPL's output for debugging
+
+    # # uncomment the next line to see the repl's output for debugging
     # child.logfile = sys.stdout
 
     child.sendline("stty -icanon")
-
+    #
     child.sendline(f"cd {DEFAULT_LEAN_WORKSPACE}")
-
+    #
     child.sendline(f"{DEFAULT_LAKE_PATH} exe repl")
+
+
+    # child = pexpect.spawn(f"{DEFAULT_LAKE_PATH} exe repl", cwd=DEFAULT_LEAN_WORKSPACE, encoding='utf-8', maxread=1, echo=False)
+    # child = pexpect.spawn(f"lake exe repl", cwd=DEFAULT_LEAN_WORKSPACE, encoding='utf-8', maxread=1, echo=False)
 
     response = send_command_and_wait(child, imports, timeout=IMPORT_TIMEOUT)
 
+
     # print(f"Initializing Lean REPL: (PID: {child.pid})", flush = True)
     # return child
+
+
+    # print (f'response: {response}')
 
     return child, response
 
@@ -106,6 +115,7 @@ def send_command_and_wait(child, command, allTactics=False, ast=False, premises=
     else:
         json_cmd = json.dumps({"cmd": command, "allTactics" : allTactics, "ast":ast, "premises" : premises, "tactics" : tactics, "env": env})
 
+
     child.sendline(json_cmd)
     child.sendline("")  # This sends the extra newline.
 
@@ -120,6 +130,8 @@ def send_command_and_wait(child, command, allTactics=False, ast=False, premises=
         response = child.before.strip()
 
         block = response
+
+        # print (f'block: {block}')
         
         # problem_id = proof_code_list[i]["name"]
         try:
