@@ -5,9 +5,7 @@ import re
 from pathlib import Path
 from transformers import AutoTokenizer
 
-model_id = "Goedel-LM/Goedel-Prover-V2-32B"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-
+model_id = "Goedel-LM/Goedel-Prover-V2-8B"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 def process_data(path):
@@ -44,7 +42,24 @@ def load_correction_attempt(path):
 
 
 
-test_data = process_data('results/run_goedel_pset/goedel_pset_part_100')
+# test_data = process_data('results/run_goedel_pset/goedel_pset_part_100')
+
+if __name__ == "__main__":
+    # loop through all directories in run_goedel_pset and save data as separate jsonl file
+    base_path = Path('results/run_goedel_pset')
+    output_base_path = Path('processed_data')
+    output_base_path.mkdir(exist_ok=True)
+
+    for pset_dir in base_path.iterdir():
+        if pset_dir.is_dir():
+            print(f"Processing directory: {pset_dir.name}")
+            processed_data = process_data(pset_dir)
+
+            output_file_path = output_base_path / f"{pset_dir.name}.jsonl"
+            with open(output_file_path, 'w') as f:
+                for entry in processed_data:
+                    f.write(json.dumps(entry) + '\n')
+            print(f"Saved processed data to {output_file_path}")
 
 
 
