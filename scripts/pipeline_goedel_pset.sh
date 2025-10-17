@@ -76,7 +76,10 @@ if [ -d "$DATA_PATH" ]; then
 
     # run through main loop for all files
 
-    for file in "${FILE_LIST[@]}"; do
+    # shuffle:
+    mapfile -t SHUFFLED_FILES < <(shuf -e "${FILE_LIST[@]}")
+
+    for file in "${SHUFFLED_FILES[@]}"; do
         echo "Processing file: $file"
         DATA_PATH="$file"
 
