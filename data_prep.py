@@ -28,7 +28,7 @@ def process_data(path):
 def load_original_attempt(path):
     data = json.load(open(path))
     if data:
-        return [{'context': d['model_input'], 'target': d['model_output'], 'prev_attempt': ""} for d in data]
+        return [{'context': d['model_input'], 'target': d['model_output'], 'prev_attempt': "", 'type': 'initial_attempt'} for d in data]
     else:
         return []
 
@@ -36,7 +36,7 @@ def load_correction_attempt(path):
     data = json.load(open(path))
     if data:
 
-        return [{'context': tokenizer.apply_chat_template([ d['messages_history_list'][0], data[0]['messages_history_list'][-1]], tokenize=False, add_generation_prompt=False), 'target': d['model_output'], 'prev_attempt': tokenizer.apply_chat_template([ d['messages_history_list'][-2]], tokenize=False, add_generation_prompt=False)} for d in data]
+        return [{'context': tokenizer.apply_chat_template([ d['messages_history_list'][0], data[0]['messages_history_list'][-1]], tokenize=False, add_generation_prompt=False), 'target': d['model_output'], 'prev_attempt': tokenizer.apply_chat_template([ d['messages_history_list'][-2]], tokenize=False, add_generation_prompt=False), 'type': 'correction'} for d in data]
     else:
         return []
 
